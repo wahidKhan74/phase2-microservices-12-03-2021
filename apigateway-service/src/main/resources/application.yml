@@ -1,0 +1,31 @@
+# server port
+server:
+  port: 9099
+  
+eureka:
+  client:
+   serviceUrl:
+     defaultZone:  http://localhost:9091/eureka
+     
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      discovery:
+         locator:
+            enabled: true
+      routes:
+      - id: accountMoule
+        uri: lb://account-service
+        predicates:
+        - Path=/api/ac/**
+      - id: productModule
+        uri: http://localhost:9094
+        predicates:
+        - Path=/api/pd/**
+      - id: productModule
+        uri: http://localhost:9095
+        predicates:
+        - Path=/api/it/**
+       
